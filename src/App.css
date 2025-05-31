@@ -1,33 +1,113 @@
-.app {
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.app-logo {
-  width: 500px;
-  max-width: 90%;
-  pointer-events: none;
-}
-
-.app-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  color: rgb(255, 255, 255);
-  font-size: calc(10px + 2vmin);
-  background: linear-gradient(50deg, #fff 0%, #f4900e 50%, #ffeda7 100%);
-}
-
-.app-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@layer utilities {
+  @keyframes gradient-x {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
   }
 
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 5s ease infinite;
+  }
+}
+
+@layer components {
+  .search-input {
+    @apply flex-1 px-4 py-2 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white shadow-inner;
+  }
+
+  .btn-primary {
+    @apply px-6 py-2 bg-white text-purple-600 font-semibold rounded-lg hover:bg-purple-100 active:scale-95 transition-all duration-200 shadow-md;
+  }
+
+  .btn-secondary {
+    @apply flex-1 px-4 py-2 text-white text-sm font-medium rounded-lg active:scale-95 transition;
+  }
+
+  .btn-copy {
+    @apply btn-secondary bg-emerald-500 hover:bg-emerald-600;
+  }
+
+  .btn-external {
+    @apply btn-secondary bg-violet-500 hover:bg-violet-600;
+  }
+
+  .gif-card {
+    @apply bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.03] transition-all duration-300;
+  }
+
+  .gif-image {
+    @apply w-full h-52 object-cover;
+  }
+
+  .gif-actions {
+    @apply p-4 space-y-3;
+  }
+
+  .button-group {
+    @apply flex gap-2;
+  }
+
+  .header-container {
+    @apply max-w-6xl mx-auto px-4 py-10;
+  }
+
+  .header-title {
+    @apply text-5xl font-extrabold text-center text-white drop-shadow-md mb-8;
+  }
+
+  .search-container {
+    @apply flex gap-4 max-w-md mx-auto;
+  }
+
+  .main-container {
+    @apply max-w-6xl mx-auto px-4 py-10;
+  }
+
+  .gif-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+  }
+
+  .empty-state {
+    @apply text-center text-gray-500 mt-10 text-lg;
+  }
+
+  .app-background {
+    @apply min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 text-gray-800;
+  }
+
+  .header-gradient {
+    @apply bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 shadow-lg animate-gradient-x;
+  }
+
+  .footer-text {
+    @apply text-center text-sm py-6 text-gray-500;
+  }
+
+  .loading-spinner {
+    @apply flex items-center gap-2;
+  }
+}
+
+.loader {
+  border: 2px solid #fff;
+  border-top: 2px solid #7c3aed;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
   to {
     transform: rotate(360deg);
   }
