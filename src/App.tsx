@@ -11,13 +11,15 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [gifs, setGifs] = useState<GifData[]>([]);
   const [loading, setLoading] = useState(false);
+  const [searched, setSearched] = useState(false);
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) return;
     setLoading(true);
+    setSearched(true);
     try {
       const response = await axios.get(
-        `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchTerm}&limit=20`,
+        `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchTerm}&limit=25`,
       );
       setGifs(response.data.data);
     } catch (error) {
@@ -28,20 +30,30 @@ function App() {
 
   return (
     <div className="app-background">
-      <SearchHeader
-        searchTerm={searchTerm}
-        loading={loading}
-        onSearchTermChange={setSearchTerm}
-        onSearch={handleSearch}
-      />
+      <div className="floating-orb orb-1"></div>
+      <div className="floating-orb orb-2"></div>
+      <div className="floating-orb orb-3"></div>
 
-      <main className="main-container">
-        <GifGrid gifs={gifs} loading={loading} />
-      </main>
+      <div className="relative z-10">
+        <SearchHeader
+          searchTerm={searchTerm}
+          loading={loading}
+          onSearchTermChange={setSearchTerm}
+          onSearch={handleSearch}
+        />
 
-      <footer className="footer-text">
-        Made with 💖 using Baseline from Devika
-      </footer>
+        <main className="main-container">
+          <GifGrid gifs={gifs} loading={loading} searched={searched} />
+        </main>
+
+        <footer className="footer-text">
+          <p className="text-sm">
+            Made with <span className="text-pink-400 animate-pulse">💖</span>{' '}
+            using <span className="text-gradient font-semibold">Baseline</span>{' '}
+            from Devika
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }
