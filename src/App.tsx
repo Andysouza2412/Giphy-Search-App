@@ -22,9 +22,7 @@ function App() {
         `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchTerm}&limit=25`,
       );
       setGifs(response.data.data);
-    } catch (error) {
-      console.error('Error fetching GIFs:', error);
-    }
+    } catch (error) {}
     setLoading(false);
   };
 
