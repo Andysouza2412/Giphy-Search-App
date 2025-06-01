@@ -50,7 +50,7 @@ function App() {
           <p className="text-sm">
             Made with <span className="text-pink-400 animate-pulse">💖</span>{' '}
             using <span className="text-gradient font-semibold">Baseline</span>{' '}
-            from Devika
+            from <span className="text-gradient font-semibold">devika</span>
           </p>
         </footer>
       </div>

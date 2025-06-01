@@ -12,7 +12,7 @@ const GifGrid: React.FC<GifGridProps> = ({ gifs, loading, searched }) => {
   if (loading) {
     return (
       <div className="gif-grid">
-        {[...Array(15)].map((_, index) => (
+        {[...Array(20)].map((_, index) => (
           <div key={index} className="skeleton h-52 animate-pulse" />
         ))}
       </div>

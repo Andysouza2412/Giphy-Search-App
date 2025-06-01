@@ -4,8 +4,7 @@
 
 @layer utilities {
   @keyframes gradient-x {
-    0%,
-    100% {
+    0%, 100% {
       background-position: 0% 50%;
     }
     50% {
@@ -13,43 +12,152 @@
     }
   }
 
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .animate-gradient-x {
-    background-size: 200% 200%;
-    animation: gradient-x 5s ease infinite;
+    background-size: 400% 400%;
+    animation: gradient-x 15s ease infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .text-gradient {
+    background: linear-gradient(to right, #ec4899, #8b5cf6, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shimmer {
+    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
   }
 }
 
 @layer components {
   .search-input {
-    @apply flex-1 px-4 py-2 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white shadow-inner;
+    @apply flex-1 px-6 py-4 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-white/30 focus:border-white/50 transition-all duration-300;
   }
 
   .btn-primary {
-    @apply px-6 py-2 bg-white text-purple-600 font-semibold rounded-lg hover:bg-purple-100 active:scale-95 transition-all duration-200 shadow-md;
+    @apply px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-2xl hover:from-purple-600 hover:to-pink-600 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
   }
 
   .btn-secondary {
-    @apply flex-1 px-4 py-2 text-white text-sm font-medium rounded-lg active:scale-95 transition;
+    @apply flex-1 px-4 py-3 text-white text-sm font-semibold rounded-xl transition-all duration-300 relative overflow-hidden;
   }
 
   .btn-copy {
-    @apply btn-secondary bg-emerald-500 hover:bg-emerald-600;
+    @apply btn-secondary bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-500 hover:to-cyan-500 shadow-md hover:shadow-lg;
   }
 
   .btn-external {
-    @apply btn-secondary bg-violet-500 hover:bg-violet-600;
+    @apply btn-secondary bg-gradient-to-r from-violet-400 to-purple-400 hover:from-violet-500 hover:to-purple-500 shadow-md hover:shadow-lg;
   }
 
   .gif-card {
-    @apply bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-[1.03] transition-all duration-300;
+    @apply relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden hover:from-white/20 hover:to-white/10 transition-all duration-500 border border-white/10 hover:border-white/20;
+  }
+
+  .gif-card:hover {
+    @apply shadow-2xl shadow-purple-500/20;
+  }
+
+  .gif-item {
+    animation: fadeInUp 0.5s ease-out both;
+  }
+
+  .gif-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+
+  .gif-card:hover::before {
+    transform: translateX(100%);
   }
 
   .gif-image {
-    @apply w-full h-52 object-cover;
+    @apply w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110;
   }
 
   .gif-actions {
-    @apply p-4 space-y-3;
+    @apply absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300;
   }
 
   .button-group {
@@ -57,54 +165,104 @@
   }
 
   .header-container {
-    @apply max-w-6xl mx-auto px-4 py-10;
+    @apply max-w-6xl mx-auto px-4 py-16;
   }
 
   .header-title {
-    @apply text-5xl font-extrabold text-center text-white drop-shadow-md mb-8;
+    @apply text-6xl md:text-7xl font-black text-center text-white mb-12 relative;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
   }
 
   .search-container {
-    @apply flex gap-4 max-w-md mx-auto;
+    @apply flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto;
   }
 
   .main-container {
-    @apply max-w-6xl mx-auto px-4 py-10;
+    @apply max-w-7xl mx-auto px-4 py-10;
   }
 
   .gif-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6;
   }
 
   .empty-state {
-    @apply text-center text-gray-500 mt-10 text-lg;
+    @apply text-center mt-20 glass-dark rounded-3xl p-12 max-w-md mx-auto;
+  }
+
+  .empty-state-text {
+    @apply text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-4;
+  }
+
+  .empty-state-subtext {
+    @apply text-gray-300 text-lg;
   }
 
   .app-background {
-    @apply min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 text-gray-800;
+    @apply min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden;
+  }
+
+  .app-background::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+    animation: rotate 30s linear infinite;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .header-gradient {
-    @apply bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 shadow-lg animate-gradient-x;
+    @apply relative bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-blue-600/20 backdrop-blur-lg border-b border-white/10;
   }
 
   .footer-text {
-    @apply text-center text-sm py-6 text-gray-500;
+    @apply text-center py-8 relative z-10;
+  }
+
+  .footer-container {
+    @apply glass-dark rounded-full px-6 py-3 mx-auto inline-block;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+  }
+
+  .footer-container:hover {
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
+    @apply transition-all duration-300;
   }
 
   .loading-spinner {
-    @apply flex items-center gap-2;
+    @apply flex items-center gap-3;
+  }
+
+  .skeleton {
+    @apply bg-gray-700/50 rounded-2xl overflow-hidden relative;
+  }
+
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 1.5s infinite;
   }
 }
 
 .loader {
-  border: 2px solid #fff;
-  border-top: 2px solid #7c3aed;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
   border-radius: 50%;
-  width: 1rem;
-  height: 1rem;
-  animation: spin 1s linear infinite;
-  display: inline-block;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
@@ -112,3 +270,4 @@
     transform: rotate(360deg);
   }
 }
+
