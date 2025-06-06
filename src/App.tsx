@@ -17,12 +17,10 @@ function App() {
     if (!searchTerm.trim()) return;
     setLoading(true);
     setSearched(true);
-    try {
-      const response = await axios.get(
-        `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchTerm}&limit=25`,
-      );
-      setGifs(response.data.data);
-    } catch (error) {}
+    const response = await axios.get(
+      `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchTerm}&limit=25`,
+    );
+    setGifs(response.data.data);
     setLoading(false);
   };
 
